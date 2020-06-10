@@ -140,8 +140,8 @@ console.log("adding on click cluster function");
   console.log("adding on click unclustered point function");
   map.on('click', 'unclustered-point', function(e) {
   var coordinates = e.features[0].geometry.coordinates.slice();
-  var mag = e.features[0].properties.mag;
-  var tsunami;
+  var mag = e.features[0].properties.quality;
+  var stream_id = e.features[0].properties.stream_id;
 
   if (e.features[0].properties.quality === 1) {
   tsunami = 'yes';
@@ -170,7 +170,7 @@ console.log("adding on click cluster function");
   map.getCanvas().style.cursor = 'pointer';
   });
   map.on('mouseleave', 'clusters', function() {
-  map.getCanvas().style.cursor = '';
+  map.getCanvas().style.cursor = 'pointer';
   });
   });
 
