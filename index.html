@@ -46,14 +46,6 @@
 
   <script>
 
-  //Get user getCurrentPosition
-  var startPos;
-
-  window.onload = function() {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      startPos = position;
-    });
-  };
 
     //ACCESS
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
@@ -61,11 +53,27 @@
       container: 'map',
       zoom: 12,
       center: [
-        startPos.coords.longitude,
-        startPos.coords.latitude
+        0,
+        20
       ],
       style: 'mapbox://styles/mapbox/light-v10'
     });
+
+    //Get user getCurrentPosition
+    var startPos;
+
+    window.onload = function() {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        startPos = position;
+      });
+      map.flyTo({
+        center: [
+          startPos.coords.longitude,
+          startPos.coords.latitude
+        ],
+        essential: true //this animation is considered essential with respect to preferes-reduced-motion
+      });
+    };
     //Camera
 
     document.getElementById('camera').addEventListener('click', function() {
