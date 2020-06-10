@@ -1,0 +1,29 @@
+{
+  "name": "BlueAlert",
+  "version": "1.0.0",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdmiranda/BlueAlert.git"
+  },
+  "author": "Jeremy Miranda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jdmiranda/BlueAlert/issues"
+  },
+  "homepage": "https://github.com/jdmiranda/BlueAlert#readme",
+  "devDependencies": {
+    "browser-sync": "^2.5.3",
+    "gulp": "^3.9.0",
+    "gulp-watch": "^4.3.5",
+    "run-sequence": "^1.0.2"
+  },
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "mocha": "^2.3.4"
+  },
+  "description": ""
+}
