@@ -35,11 +35,8 @@ background: #ee8a65;
     <button id="camera">Start Recording</button>
 
     <script>
-    "use strict";
 
-    document.getElementById('camera').addEventListener('click', function(){
 
-    });
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
     var map = map = new mapboxgl.Map({
@@ -47,6 +44,10 @@ background: #ee8a65;
       zoom: 0.3,
       center: [0, 20],
       style: 'mapbox://styles/mapbox/light-v10'
+      });
+
+      document.getElementById('camera').addEventListener('click', function(){
+
       });
 
     map.addControl(new mapboxgl.NavigationControl());
