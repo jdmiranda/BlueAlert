@@ -66,13 +66,6 @@
       navigator.geolocation.getCurrentPosition(function(position) {
         startPos = position;
       });
-      map.flyTo({
-        center: [
-          startPos.coords.longitude,
-          startPos.coords.latitude
-        ],
-        essential: true //this animation is considered essential with respect to preferes-reduced-motion
-      });
     };
     //Camera
 
