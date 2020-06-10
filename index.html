@@ -53,8 +53,8 @@
       container: 'map',
       zoom: 5,
       center: [
-        27,
-        -82
+        -82,
+        27
       ],
       style: 'mapbox://styles/mapbox/light-v10'
     });
@@ -78,7 +78,7 @@
         ],
         essential: true //this animation is considered essential with respect to preferes-reduced-motion
       });
-      map.zoomTo(12);
+      map.zoomTo(10, {duration: 9000});
     });
 
     //Nav control gizmo
