@@ -1,0 +1,34 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+#filter {
+  position: fixed;
+    z-index: 100;
+    top: 10px;
+    left: 45px;
+}
+
+#filter input, #filter button {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 3px;
+    color: #404040;
+    color: rgba(0,0,0,.75);
+}
+
+#filter input {
+    height: 23px;
+}
+
+#filter button {
+    height: 27px;
+}
