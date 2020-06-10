@@ -1,54 +1,61 @@
 <!DOCTYPE html>
 
 <html>
+
 <head>
-    <meta charset=utf-8/>
-    <title>Blue Alerts</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet" />
-    <style>
-    	body { margin: 0; padding: 0; }
-    	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+  <meta charset=utf-8 />
+  <title>Blue Alerts</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-    </style>
-    </head>
-    <body>
-      <style>
-#camera {
-display: block;
-position: relative;
-margin: 0px auto;
-width: 50%;
-height: 40px;
-padding: 10px;
-border: none;
-border-radius: 3px;
-font-size: 12px;
-text-align: center;
-color: #fff;
-background: #ee8a65;
-}
-</style>
-    <div id="map"></div>
-    <br />
-    <button id="camera">Start Recording</button>
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
 
-    <script>
+<body>
+  <style>
+    #camera {
+      display: block;
+      position: relative;
+      margin: 0px auto;
+      width: 50%;
+      height: 40px;
+      padding: 10px;
+      border: none;
+      border-radius: 3px;
+      font-size: 12px;
+      text-align: center;
+      color: #fff;
+      background: #ee8a65;
+    }
+  </style>
+  <div id="map"></div>
+  <br />
+  <button id="camera">Start Recording</button>
 
-
-
+  <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
     var map = map = new mapboxgl.Map({
       container: 'map',
       zoom: 0.3,
       center: [0, 20],
       style: 'mapbox://styles/mapbox/light-v10'
-      });
+    });
 
-      document.getElementById('camera').addEventListener('click', function(){
-
-      });
+    document.getElementById('camera').addEventListener('click', function() {
+      console.log("streaming camera now");
+    });
 
     map.addControl(new mapboxgl.NavigationControl());
 
@@ -59,23 +66,22 @@ background: #ee8a65;
     var mag4 = ['==', ['get', 'quality'], 4];
     var mag5 = ['==', ['get', 'quality'], 5];
 
-    map.on('load', function(){
+    map.on('load', function() {
       map.addSource('earthquakes', {
-          'type': 'geojson',
-          'data':
-          'https://raw.githubusercontent.com/jdmiranda/bluealerts/master/blue.geojson',
-          'cluster':true,
-          'clusterProperties':{
-            'mag1': ['+', ['case', mag1, 1, 0]],
-            'mag2': ['+', ['case', mag2, 1, 0]],
-            'mag3': ['+', ['case', mag3, 1, 0]],
-            'mag4': ['+', ['case', mag4, 1, 0]],
-            'mag5': ['+', ['case', mag5, 1, 0]]
-          }
+        'type': 'geojson',
+        'data': 'https://raw.githubusercontent.com/jdmiranda/bluealerts/master/blue.geojson',
+        'cluster': true,
+        'clusterProperties': {
+          'mag1': ['+', ['case', mag1, 1, 0]],
+          'mag2': ['+', ['case', mag2, 1, 0]],
+          'mag3': ['+', ['case', mag3, 1, 0]],
+          'mag4': ['+', ['case', mag4, 1, 0]],
+          'mag5': ['+', ['case', mag5, 1, 0]]
+        }
       });
 
 
-console.log("adding cluster layer");
+      console.log("adding cluster layer");
 
       map.addLayer({
         id: 'clusters',
@@ -96,8 +102,8 @@ console.log("adding cluster layer");
             '#f1f075',
             750,
             '#f28cb1'
-            ],
-            'circle-radius': [
+          ],
+          'circle-radius': [
             'step',
             ['get', 'point_count'],
             20,
@@ -110,90 +116,89 @@ console.log("adding cluster layer");
       });
 
 
-console.log("adding cluster count layer");
+      console.log("adding cluster count layer");
       map.addLayer({
-  id: 'cluster-count',
-  type: 'symbol',
-  source: 'earthquakes',
-  filter: ['has', 'point_count'],
-  layout: {
-  'text-field': '{point_count_abbreviated}',
-  'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-  'text-size': 12
-  }
-  });
+        id: 'cluster-count',
+        type: 'symbol',
+        source: 'earthquakes',
+        filter: ['has', 'point_count'],
+        layout: {
+          'text-field': '{point_count_abbreviated}',
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 12
+        }
+      });
 
-console.log("adding unclustered point layer");
-  map.addLayer({
-  id: 'unclustered-point',
-  type: 'circle',
-  source: 'earthquakes',
-  filter: ['!', ['has', 'point_count']],
-  paint: {
-  'circle-color': '#11b4da',
-  'circle-radius': 4,
-  'circle-stroke-width': 1,
-  'circle-stroke-color': '#fff'
-  }
-  });
-
-
-console.log("adding on click cluster function");
-  // inspect a cluster on click
-  map.on('click', 'clusters', function(e) {
-  var features = map.queryRenderedFeatures(e.point, {
-  layers: ['clusters']
-  });
-  var clusterId = features[0].properties.cluster_id;
-  map.getSource('earthquakes').getClusterExpansionZoom(
-  clusterId,
-  function(err, zoom) {
-  if (err) return;
-
-  map.easeTo({
-  center: features[0].geometry.coordinates,
-  zoom: zoom
-  });
-  }
-  );
-  });
-
-  // When a click event occurs on a feature in
-  // the unclustered-point layer, open a popup at
-  // the location of the feature, with
-  // description HTML from its properties.
-  console.log("adding on click unclustered point function");
-  map.on('click', 'unclustered-point', function(e) {
-  var coordinates = e.features[0].geometry.coordinates.slice();
-  var mag = e.features[0].properties.quality;
-  var stream_id = e.features[0].properties.stream_id;
-
-    // Ensure that if the map is zoomed out such that
-  // multiple copies of the feature are visible, the
-  // popup appears over the copy being pointed to.
-  while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-  coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-  }
-
-  console.log("adding popup");
-
-  new mapboxgl.Popup()
-  .setLngLat(coordinates)
-  .setHTML(
-  '<iframe width="560" height=315" src="' + stream_id + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  )
-  .addTo(map);
-  });
-
-  map.on('mouseenter', 'clusters', function() {
-  map.getCanvas().style.cursor = 'pointer';
-  });
-  map.on('mouseleave', 'clusters', function() {
-  map.getCanvas().style.cursor = 'pointer';
-  });
-  });
+      console.log("adding unclustered point layer");
+      map.addLayer({
+        id: 'unclustered-point',
+        type: 'circle',
+        source: 'earthquakes',
+        filter: ['!', ['has', 'point_count']],
+        paint: {
+          'circle-color': '#11b4da',
+          'circle-radius': 4,
+          'circle-stroke-width': 1,
+          'circle-stroke-color': '#fff'
+        }
+      });
 
 
-    </script>
-  </body>
+      console.log("adding on click cluster function");
+      // inspect a cluster on click
+      map.on('click', 'clusters', function(e) {
+        var features = map.queryRenderedFeatures(e.point, {
+          layers: ['clusters']
+        });
+        var clusterId = features[0].properties.cluster_id;
+        map.getSource('earthquakes').getClusterExpansionZoom(
+          clusterId,
+          function(err, zoom) {
+            if (err) return;
+
+            map.easeTo({
+              center: features[0].geometry.coordinates,
+              zoom: zoom
+            });
+          }
+        );
+      });
+
+      // When a click event occurs on a feature in
+      // the unclustered-point layer, open a popup at
+      // the location of the feature, with
+      // description HTML from its properties.
+      console.log("adding on click unclustered point function");
+      map.on('click', 'unclustered-point', function(e) {
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var mag = e.features[0].properties.quality;
+        var stream_id = e.features[0].properties.stream_id;
+
+        // Ensure that if the map is zoomed out such that
+        // multiple copies of the feature are visible, the
+        // popup appears over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        console.log("adding popup");
+
+        new mapboxgl.Popup()
+          .setLngLat(coordinates)
+          .setHTML(
+            '<iframe width="560" height=315" src="' + stream_id + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+          )
+          .addTo(map);
+      });
+
+      map.on('mouseenter', 'clusters', function() {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+      map.on('mouseleave', 'clusters', function() {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+    });
+  </script>
+</body>
+
 </html>
