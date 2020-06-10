@@ -143,13 +143,7 @@ console.log("adding on click cluster function");
   var mag = e.features[0].properties.quality;
   var stream_id = e.features[0].properties.stream_id;
 
-  if (e.features[0].properties.quality === 1) {
-  tsunami = 'yes';
-  } else {
-  tsunami = 'no';
-  }
-
-  // Ensure that if the map is zoomed out such that
+    // Ensure that if the map is zoomed out such that
   // multiple copies of the feature are visible, the
   // popup appears over the copy being pointed to.
   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
