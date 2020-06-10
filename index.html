@@ -23,7 +23,7 @@
     document.getElementById('camera').addEventListener('click', function(){
       <video autoplay></video>
 
-<script>
+
 const constraints = {
   video: true
 };
@@ -32,7 +32,7 @@ const video = document.querySelector('video');
 
 navigator.mediaDevices.getUserMedia(constraints).
   then((stream) => {video.srcObject = stream});
-</script>
+
     });
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
