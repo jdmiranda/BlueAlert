@@ -9,11 +9,11 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRse
     map.addControl(new mapboxgl.NavigationControl());
 
     // filters for classifying earthquakes into five categories based on magnitude
-    var mag1 = ['<', ['get', 'mag'], 2];
-    var mag2 = ['all', ['>=', ['get', 'mag'], 2], ['<', ['get', 'mag'], 3]];
-    var mag3 = ['all', ['>=', ['get', 'mag'], 3], ['<', ['get', 'mag'], 4]];
-    var mag4 = ['all', ['>=', ['get', 'mag'], 4], ['<', ['get', 'mag'], 5]];
-    var mag5 = ['>=', ['get', 'mag'], 5];
+    var mag1 = ['==', ['get', 'quality'], 1];
+    var mag2 = ['==', ['get', 'quality'], 2];
+    var mag3 = ['==', ['get', 'quality'], 3];
+    var mag4 = ['==', ['get', 'quality'], 4];
+    var mag5 = ['==', ['get', 'quality'], 5];
 
     // colors to use for the categories
     var colors = ['#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c'];
