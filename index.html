@@ -45,6 +45,7 @@
   <button id="camera">Start Recording</button>
 
   <script>
+    //ACCESS
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
     var map = map = new mapboxgl.Map({
       container: 'map',
@@ -53,10 +54,26 @@
       style: 'mapbox://styles/mapbox/light-v10'
     });
 
+    //Camera
+
     document.getElementById('camera').addEventListener('click', function() {
       console.log("streaming camera now");
+      window.onload = function() {
+        var startPos;
+        navigator.geolocation.getCurrentPosition(function(position) {
+          startPos = position;
+        });
+        map.flyTo({
+          center: [
+            startPos.coords.latitude,
+            startPos.coords.longitude
+          ],
+          essential: true //this animation is considered essential with respect to preferes-reduced-motion
+        });
+      };
     });
 
+    //Nav control gizmo
     map.addControl(new mapboxgl.NavigationControl());
 
     // filters for classifying earthquakes into five categories based on magnitude
@@ -66,6 +83,7 @@
     var mag4 = ['==', ['get', 'quality'], 4];
     var mag5 = ['==', ['get', 'quality'], 5];
 
+    //Load events
     map.on('load', function() {
       map.addSource('earthquakes', {
         'type': 'geojson',
