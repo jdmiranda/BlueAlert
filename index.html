@@ -65,7 +65,7 @@
     //Camera
 
     document.getElementById('camera').addEventListener('click', function() {
-      console.log("streaming camera now");
+      console.log('users current position: ' + startPos.coords);
         map.flyTo({
           center: [
             startPos.coords.latitude,
