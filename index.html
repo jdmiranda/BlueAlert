@@ -38,7 +38,8 @@
       map.addSource('earthquakes', {
           'type': 'geojson',
           'data':
-          'https://raw.githubusercontent.com/jdmiranda/bluealerts/master/blue.geojson',
+          //'https://raw.githubusercontent.com/jdmiranda/bluealerts/master/blue.geojson',
+          'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson',
           'cluster':true,
           'clusterProperties':{
             'mag1': ['+', ['case', mag1, 1, 0]],
