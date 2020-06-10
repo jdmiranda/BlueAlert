@@ -69,8 +69,14 @@
     };
     //Camera
 
-    document.getElementById('camera').addEventListener('click', function() {
-      console.log('users current position: lat: ' + startPos.coords.latitude + ' lon: ' + startPos.coords.longitude);
+
+    function addMarker(m) {
+      const coordinates = m.geometry.coordinates;
+      const props = m.properties;
+      console.log(m);
+    };
+
+    function fly(){
       map.flyTo({
         center: [
           startPos.coords.longitude,
@@ -78,7 +84,16 @@
         ],
         essential: true //this animation is considered essential with respect to preferes-reduced-motion
       });
+    };
+
+    function zoom(){
       map.zoomTo(10, {duration: 9000});
+    };
+
+    document.getElementById('camera').addEventListener('click', function() {
+      console.log('users current position: lat: ' + startPos.coords.latitude + ' lon: ' + startPos.coords.longitude);
+      fly();
+      zoom();
     });
 
     //Nav control gizmo
