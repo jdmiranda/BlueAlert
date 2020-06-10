@@ -66,16 +66,6 @@
       ],
       style: 'mapbox://styles/mapbox/light-v10'
     });
-
-
-    //Get user getCurrentPosition
-    var startPos;
-
-    window.onload = function() {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        startPos = position;
-      });
-    };
     //Camera
 
     document.getElementById('camera').addEventListener('click', function() {
