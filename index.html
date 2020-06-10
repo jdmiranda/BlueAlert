@@ -5,20 +5,68 @@
     <meta charset=utf-8/>
     <title>Blue Alerts</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
-    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet'/>
-    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet'/>
-    <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet'/>
-    <link href='styles/site.css' rel='stylesheet'/>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet" />
+    <style>
+    	body { margin: 0; padding: 0; }
+    	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    </style>
+    </head>
+    <body>
+    <div id="map"/>
+    <script>
+    "use strict";
 
-    <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
-    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
-    <script type="text/javascript" src="https://maps.google.com/maps/api/js?"></script>
-    <script type="text/javascript" src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js></script>
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/sweetalert/dist/sweetalert.min.js>
-</head>
-<body>
-<div id="map"></div>
-</body>
-<script type="text/javascript" src='scripts/site.js'></script>
+    console.log('test');
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
+    var map = map = new mapboxgl.Map({
+      container: 'map',
+      zoom: 0.3,
+      center: [0, 20],
+      style: 'mapbox://styles/mapbox/light-v10'
+      });
+
+    map.addControl(new mapboxgl.NavigationControl());
+
+    // filters for classifying earthquakes into five categories based on magnitude
+    var mag1 = ['==', ['get', 'quality'], 1];
+    var mag2 = ['==', ['get', 'quality'], 2];
+    var mag3 = ['==', ['get', 'quality'], 3];
+    var mag4 = ['==', ['get', 'quality'], 4];
+    var mag5 = ['==', ['get', 'quality'], 5];
+
+    map.on('load', function(){
+      map.addSource('earthquakes', {
+          'type': 'geojson',
+          'data':
+          'https://raw.githubusercontent.comjdmiranda/bluealerts/master/blue.geojson',
+          'cluster':true,
+          'clusterProperties':{
+            'mag1': ['+', ['case', mag1, 1, 0]],
+            'mag2': ['+', ['case', mag2, 1, 0]],
+            'mag3': ['+', ['case', mag3, 1, 0]],
+            'mag4': ['+', ['case', mag4, 1, 0]],
+            'mag5': ['+', ['case', mag5, 1, 0]]
+          }
+      });
+
+      console.log('alive');
+    })
+
+
+    var markers = new L.MarkerClusterGroup();
+
+
+    function processJsonGroups(data) {
+      data.forEach(addMarker);
+      map.addLayer(markers);
+    };
+
+    function addMarker(m) {
+      const coordinates = m.geometry.coordinates;
+      const props = m.properties;
+      console.log(m);
+    };
+    </script>
+  </body>
 </html>
