@@ -10,53 +10,30 @@
     <style>
     	body { margin: 0; padding: 0; }
     	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
-      #menu {
-background: #fff;
-position: absolute;
-z-index: 1;
-top: 10px;
-right: 10px;
-border-radius: 3px;
-width: 120px;
-border: 1px solid rgba(0, 0, 0, 0.4);
-font-family: 'Open Sans', sans-serif;
-}
 
-#menu a {
-font-size: 13px;
-color: #404040;
-display: block;
-margin: 0;
-padding: 0;
-padding: 10px;
-text-decoration: none;
-border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-text-align: center;
-}
-
-#menu a:last-child {
-border: none;
-}
-
-#menu a:hover {
-background-color: #f8f8f8;
-color: #404040;
-}
-
-#menu a.active {
-background-color: #3887be;
-color: #ffffff;
-}
-
-#menu a.active:hover {
-background: #3074a4;
-}
     </style>
     </head>
     <body>
     <div id="map"/>
+    <button id="camera">Start Recording</button>
+
     <script>
     "use strict";
+
+    document.getElementById('camera').addEventListener('click', function(){
+      <video autoplay></video>
+
+<script>
+const constraints = {
+  video: true
+};
+
+const video = document.querySelector('video');
+
+navigator.mediaDevices.getUserMedia(constraints).
+  then((stream) => {video.srcObject = stream});
+</script>
+    });
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
     var map = map = new mapboxgl.Map({
