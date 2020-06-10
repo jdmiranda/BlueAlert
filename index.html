@@ -17,7 +17,6 @@
     <script>
     "use strict";
 
-    console.log('test');
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
     var map = map = new mapboxgl.Map({
       container: 'map',
@@ -50,14 +49,13 @@
           }
       });
 
-      console.log('alive');
     })
 
 
-    var markers = new L.MarkerClusterGroup();
+    var markers = new mapboxgl.MarkerClusterGroup();
 
 
-    function processJsonGroups(data) {
+    function processJsonGroups(earthquakes) {
       data.forEach(addMarker);
       map.addLayer(markers);
     };
