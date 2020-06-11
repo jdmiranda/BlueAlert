@@ -39,13 +39,29 @@
       color: #fff;
       background: #ee8a65;
     }
+    
+    #gofundme {
+      display: block;
+      position: relative;
+      margin: 0px auto;
+      width: 50%;
+      height: 40px;
+      padding: 10px;
+      border: none;
+      border-radius: 3px;
+      font-size: 12px;
+      text-align: center;
+      color: #fff;
+      background: #ee8a65;
+    }
 
   </style>
   <div id="map"></div>
   <br />
   <button id="camera">Start Recording</button>
   
-  <a href="https://google.com" class="button">Go to Google</a>
+  <button id="camera">Go Fund Us</button>
+
 
   <script>
 
@@ -100,7 +116,7 @@
     });
     
     document.getElementById('gofundme').addEventListener('click', function() {
-      gofundme();
+      window.location.href = "https://www.gofundme.com";
     });
 
     //Nav control gizmo
