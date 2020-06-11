@@ -5,8 +5,8 @@
 <head>
   <meta charset=utf-8 />
   <title>#stopp</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />	
-  <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>	
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet" />
   <style>
     body {
@@ -39,7 +39,7 @@
       color: #fff;
       background: #ee8a65;
     }
-    
+
     #gofundme {
       display: block;
       position: relative;
@@ -72,7 +72,7 @@
       container: 'map',
       zoom: 15.5,
       center: [
-        -94.636230, 
+        -94.636230,
         46.392410
       ],
       pitch: 45,
@@ -112,7 +112,7 @@
       console.log('users current position: lat: ' + startPos.coords.latitude + ' lon: ' + startPos.coords.longitude);
       fly();
     });
-    
+
     document.getElementById('gofundme').addEventListener('click', function() {
       window.location.href = "https://www.gofundme.com";
     });
@@ -127,6 +127,7 @@
     //Load events
     map.on('load', function() {
       // Insert the layer beneath any symbol layer.
+      fly();
         var layers = map.getStyle().layers;
 
         var labelLayerId;
@@ -136,7 +137,7 @@
                 break;
             }
         }
-      
+
       map.addLayer(
             {
                 'id': '3d-buildings',
@@ -174,7 +175,7 @@
             labelLayerId
         );
 
-      
+
       map.addSource('earthquakes', {
         'type': 'geojson',
         'data': 'https://raw.githubusercontent.com/jdmiranda/bluealerts/master/blue.geojson',
