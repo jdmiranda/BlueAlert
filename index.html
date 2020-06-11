@@ -102,14 +102,12 @@
           startPos.coords.latitude
         ],
         essential: true //this animation is considered essential with respect to preferes-reduced-motion
-      });
-      map.zoomTo(10);
+      }).zoomTo(10);
     };
 
     document.getElementById('camera').addEventListener('click', function() {
       console.log('users current position: lat: ' + startPos.coords.latitude + ' lon: ' + startPos.coords.longitude);
       fly();
-      zoom();
     });
     
     document.getElementById('gofundme').addEventListener('click', function() {
