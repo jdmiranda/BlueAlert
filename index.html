@@ -70,12 +70,14 @@
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
     var map = map = new mapboxgl.Map({
       container: 'map',
-      zoom: 3,
+      zoom: 15.5,
       center: [
         -94.636230, 
         46.392410
       ],
-      zoom: 10,
+      pitch: 45,
+      bearing:-17.6,
+      antialias: true,
       style: 'mapbox://styles/mapbox/light-v10'
     });
 
@@ -114,9 +116,7 @@
     document.getElementById('gofundme').addEventListener('click', function() {
       window.location.href = "https://www.gofundme.com";
     });
-
-    //Nav control gizmo
-    map.addControl(new mapboxgl.NavigationControl());
+ntrol());
 
     // filters for classifying earthquakes into five categories based on magnitude
     var mag1 = ['==', ['get', 'quality'], 1];
@@ -127,6 +127,55 @@
 
     //Load events
     map.on('load', function() {
+      // Insert the layer beneath any symbol layer.
+        var layers = map.getStyle().layers;
+
+        var labelLayerId;
+        for (var i = 0; i < layers.length; i++) {
+            if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+                labelLayerId = layers[i].id;
+                break;
+            }
+        }
+      
+      map.addLayer(
+            {
+                'id': '3d-buildings',
+                'source': 'composite',
+                'source-layer': 'building',
+                'filter': ['==', 'extrude', 'true'],
+                'type': 'fill-extrusion',
+                'minzoom': 15,
+                'paint': {
+                    'fill-extrusion-color': '#aaa',
+
+                    // use an 'interpolate' expression to add a smooth transition effect to the
+                    // buildings as the user zooms in
+                    'fill-extrusion-height': [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        15,
+                        0,
+                        15.05,
+                        ['get', 'height']
+                    ],
+                    'fill-extrusion-base': [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        15,
+                        0,
+                        15.05,
+                        ['get', 'min_height']
+                    ],
+                    'fill-extrusion-opacity': 0.6
+                }
+            },
+            labelLayerId
+        );
+
+      
       map.addSource('earthquakes', {
         'type': 'geojson',
         'data': 'https://raw.githubusercontent.com/jdmiranda/bluealerts/master/blue.geojson',
