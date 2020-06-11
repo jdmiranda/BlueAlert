@@ -102,7 +102,8 @@
           startPos.coords.latitude
         ],
         essential: true //this animation is considered essential with respect to preferes-reduced-motion
-      }).zoomTo(10, {duration: 9000});
+      });
+      map.zoomTo(10);
     };
 
     document.getElementById('camera').addEventListener('click', function() {
