@@ -43,6 +43,10 @@
   <div id="map"></div>
   <br />
   <button id="camera">Start Recording</button>
+  
+  <form action="https://google.com">
+    <input type="submit" value="Go fund us" />
+</form>
 
   <script>
 
@@ -94,6 +98,10 @@
       console.log('users current position: lat: ' + startPos.coords.latitude + ' lon: ' + startPos.coords.longitude);
       fly();
       zoom();
+    });
+    
+    document.getElementById('gofundme').addEventListener('click', function() {
+      gofundme();
     });
 
     //Nav control gizmo
