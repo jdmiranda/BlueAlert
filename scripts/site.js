@@ -71,7 +71,7 @@ console.log(devices);
   });
 
   document.getElementById('gofundme').addEventListener('click', function() {
-    window.location.href = "https://www.gofundme.com";
+    window.location.href = "https://www.gofundme.com/f/stopp-sharing-the-optimum-peoples039-perspective";
   });
 
 
