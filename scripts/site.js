@@ -165,14 +165,14 @@ var bluealert;
     // description HTML from its properties.
     map.on('click', 'unclustered-point', function(e) {
       var coordinates = e.features[0].geometry.coordinates.slice();
-      var mag = e.features[0].properties.mag;
-      var tsunami;
-
-      if (e.features[0].properties.tsunami === 1) {
-        tsunami = 'yes';
-      } else {
-        tsunami = 'no';
-      }
+      // var mag = e.features[0].properties.mag;
+      // var tsunami;
+      //
+      // if (e.features[0].properties.tsunami === 1) {
+      //   tsunami = 'yes';
+      // } else {
+      //   tsunami = 'no';
+      // }
 
       // Ensure that if the map is zoomed out such that
       // multiple copies of the feature are visible, the
@@ -187,14 +187,14 @@ var bluealert;
       new mapboxgl.Popup()
         .setLngLat(coordinates)
         .setHTML(
-          '<iframe src="' + e.features[0].properties.stream_id + '" width="380" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' +
-          '<p><a href="' + e.features[0].properties.stream_id + '"><h2>How Simplicity Will Save GIS</h2><p>Vladimir Agafonkin</a> from <a href="http://vimeo.com/foss4g">FOSS4G</a> on ' +
-          '<a href="https://vimeo.com">Vimeo</a>.</p>'
+          '<iframe src="' + e.features[0].properties.stream_url + '" width="380" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' +
+          '<p><a href="' + e.features[0].properties.stream_url +
+          '"><h2> "' + e.features[0].properties.stream_name + '"</h2></p>'
         )
         .addTo(map);
     });
 
-    map.on('mouseenter', 'clusters', function() {
+    map.on('mouseenter', 'unclustered-point', function() {
       map.getCanvas().style.cursor = 'pointer';
     });
     map.on('mouseleave', 'clusters', function() {
