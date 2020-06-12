@@ -162,8 +162,8 @@ console.log(devices);
       filter: ['!', ['has', 'point_count']],
       paint: {
         'circle-color': '#b81a1a',
-        'circle-radius': 4,
-        'circle-stroke-width': 1,
+        'circle-radius': 6,
+        'circle-stroke-width': 6,
         'circle-stroke-color': '#fff'
       }
     });
