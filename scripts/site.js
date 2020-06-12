@@ -125,7 +125,7 @@ console.log(devices);
         'circle-color': [
           'step',
           ['get', 'point_count'],
-          '#51bbd6',
+          '#b81a1a',
           100,
           '#f1f075',
           750,
@@ -161,7 +161,7 @@ console.log(devices);
       source: 'blueAlert',
       filter: ['!', ['has', 'point_count']],
       paint: {
-        'circle-color': '#11b4da',
+        'circle-color': '#b81a1a',
         'circle-radius': 4,
         'circle-stroke-width': 1,
         'circle-stroke-color': '#fff'
