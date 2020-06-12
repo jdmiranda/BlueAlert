@@ -1,107 +1,147 @@
-
 var bluealert;
-(function () {
+(function() {
   "use strict";
 
 
   function include(file) {
-    var script  = document.createElement('script');
-    script.src  = file;
+    var script = document.createElement('script');
+    script.src = file;
     script.type = 'text/javascript';
     script.defer = true;
     document.getElementsByTagName('head').item(0).appendChild(script);
   }
 
 
-console.log("loading");
+  console.log("loading");
   include("scripts/video.js");
   include("scripts/geolocation.js");
   include("scripts/animation.js");
 
-      //ACCESS
-      mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
-      var map = new mapboxgl.Map({
-        container: 'map',
-        zoom: 3,
-        center: [
-          -94.636230,
-          46.392410
-        ],
-        style: 'mapbox://styles/mapbox/light-v10'
-      });
+  //ACCESS
+  mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    zoom: 3,
+    center: [
+      -94.636230,
+      46.392410
+    ],
+    style: 'mapbox://styles/mapbox/streets-v11'
+  });
 
-      //Camera
+  //Camera
 
-
-      function addMarker(m) {
-        const coordinates = m.geometry.coordinates;
-        const props = m.properties;
-        console.log(m);
+      function addSelfMarker(){
+        console.log('creating self marker here');
+        var marker = new mapboxgl.Marker()
+            .setLngLat([longitude,latitude])
+            .addTo(map);
       };
 
+  document.getElementById('camera').addEventListener('click', function() {
+    fly(map, longitude, latitude);
+    addSelfMarker();
+  });
 
-      document.getElementById('camera').addEventListener('click', function() {
-        fly(map,longitude,latitude);
-      });
-
-      document.getElementById('gofundme').addEventListener('click', function() {
-        window.location.href = "https://www.gofundme.com";
-      });
-
-
-      //Load events
-      map.on('load', function() {
-        // Insert the layer beneath any symbol layer.
-        getLocationUpdate();
+  document.getElementById('gofundme').addEventListener('click', function() {
+    window.location.href = "https://www.gofundme.com";
+  });
 
 
-        // map.addSource('earthquakes', {
-        //   'type': 'geojson',
-        //   'data': 'https://raw.githubusercontent.com/jdmiranda/bluealerts/master/blue.geojson',
-        //   'cluster': true,
-        //   'clusterProperties': {
-        //     'mag1': ['+', ['case', mag1, 1, 0]],
-        //     'mag2': ['+', ['case', mag2, 1, 0]],
-        //     'mag3': ['+', ['case', mag3, 1, 0]],
-        //     'mag4': ['+', ['case', mag4, 1, 0]],
-        //     'mag5': ['+', ['case', mag5, 1, 0]]
-        //   }
-        // });
+  //Load events
+  map.on('load', function() {
+    // Insert the layer beneath any symbol layer.
+    getLocationUpdate();
+
+    map.setPaintProperty('building', 'fill-color', [
+      'interpolate',
+      ['exponential', 0.5],
+      ['zoom'],
+      15,
+      '#e2714b',
+      22,
+      '#eee695'
+    ]);
+
+    map.setPaintProperty('building', 'fill-opacity', [
+      'interpolate',
+      ['exponential', 0.5],
+      ['zoom'],
+      15,
+      0,
+      22,
+      1
+    ]);
+
+        var geojson = [{
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-77.031952, 38.913184]
+        },
+        properties: {
+          icon: {
+            iconUrl: 'https://www.mapbox.com/mapbox.js/assets/images/astronaut1.png',
+            iconSize: [50, 50], // size of the icon
+            iconAnchor: [25, 25], // point of the icon which will correspond to marker's location
+            popupAnchor: [0, -25], // point from which the popup should open relative to the iconAnchor
+            className: 'dot'
+          }
+        }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-94.636230, 46.392410]
+        },
+        properties: {
+          name: 'georgefloydmurder',
+          icon: {
+            iconUrl: 'https://www.mapbox.com/mapbox.js/assets/images/astronaut2.png',
+            iconSize: [50, 50], // size of the icon
+            iconAnchor: [25, 25], // point of the icon which will correspond to marker's location
+            popupAnchor: [0, -25], // point from which the popup should open relative to the iconAnchor
+            className: 'dot'
+          }
+        }
+      }
+    ];
+
+geojson.forEach(addMarker);
 
 
-        // // When a click event occurs on a feature in
-        // // the unclustered-point layer, open a popup at
-        // // the location of the feature, with
-        // // description HTML from its properties.
-        // console.log("adding on click unclustered point function");
-        // map.on('click', 'unclustered-point', function(e) {
-        //   var coordinates = e.features[0].geometry.coordinates.slice();
-        //   var mag = e.features[0].properties.quality;
-        //   var stream_id = e.features[0].properties.stream_id;
-        //
-        //   // Ensure that if the map is zoomed out such that
-        //   // multiple copies of the feature are visible, the
-        //   // popup appears over the copy being pointed to.
-        //   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        //     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        //   }
+    function addMarker(m){
+      console.log(m);
+      var marker = new mapboxgl.Marker()
+          .setLngLat(m.geometry.coordinates)
+          .addTo(map);
+    };
 
-        //   console.log("adding popup");
-        //
-        //   new mapboxgl.Popup()
-        //     .setLngLat(coordinates)
-        //     .setHTML(
-        //       '<iframe width="560" height=315" src="' + stream_id + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-        //     )
-        //     .addTo(map);
-        // });
+    // map.addSource('points', {
+    //   'type':'geojson',
+    //   'data': geojson
+    // });
+    // map.addLayer('points');
 
-        map.on('mouseenter', 'clusters', function() {
-          map.getCanvas().style.cursor = 'pointer';
-        });
-        map.on('mouseleave', 'clusters', function() {
-          map.getCanvas().style.cursor = 'pointer';
-        });
-      });
+
+
+    //   console.log("adding popup");
+    //
+    //   new mapboxgl.Popup()
+    //     .setLngLat(coordinates)
+    //     .setHTML(
+    //       '<iframe width="560" height=315" src="' + stream_id + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    //     )
+    //     .addTo(map);
+    // });
+
+    map.on('mouseenter', 'clusters', function() {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'clusters', function() {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+  });
 
 }());
