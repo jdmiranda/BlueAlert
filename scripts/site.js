@@ -2,24 +2,109 @@ var village;
 (function () {
   "use strict";
 
-  console.log('test');
-  L.mapbox.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
-  var map = new L.mapbox.Map();
-  map.addControl(new L.mapbox.NavigationControl());
-  json = $.getJSON('http://raw.githubusercontent.comjdmiranda/bluealerts/testinglinks/blue.json')
-  var markers = new L.MarkerClusterGroup();
+
+      //ACCESS
+      mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
+      var map = map = new mapboxgl.Map({
+        container: 'map',
+        zoom: 3,
+        center: [
+          -94.636230,
+          46.392410
+        ],
+        style: 'mapbox://styles/mapbox/light-v10'
+      });
+
+      //Get user getCurrentPosition
+      var startPos;
+
+      window.onload = function() {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          startPos = position;
+        });
+      };
+      //Camera
 
 
-  function processJsonGroups(data) {
-    data.forEach(addMarker);
-    map.addLayer(markers);
-  };
+      function addMarker(m) {
+        const coordinates = m.geometry.coordinates;
+        const props = m.properties;
+        console.log(m);
+      };
 
-  function addMarker(m) {
-    const coordinates = m.geometry.coordinates;
-    const props = m.properties;
-    console.log(m);
-  };
+      function fly(){
+        map.flyTo({
+          center: [
+            startPos.coords.longitude,
+            startPos.coords.latitude
+          ],
+          essential: true //this animation is considered essential with respect to preferes-reduced-motion
+        });
+      };
 
+      document.getElementById('camera').addEventListener('click', function() {
+        console.log('users current position: lat: ' + startPos.coords.latitude + ' lon: ' + startPos.coords.longitude);
+        fly();
+      });
+
+      document.getElementById('gofundme').addEventListener('click', function() {
+        window.location.href = "https://www.gofundme.com";
+      });
+
+
+      //Load events
+      map.on('load', function() {
+        // Insert the layer beneath any symbol layer.
+        fly();
+
+
+        map.addSource('earthquakes', {
+          'type': 'geojson',
+          'data': 'https://raw.githubusercontent.com/jdmiranda/bluealerts/master/blue.geojson',
+          'cluster': true,
+          'clusterProperties': {
+            'mag1': ['+', ['case', mag1, 1, 0]],
+            'mag2': ['+', ['case', mag2, 1, 0]],
+            'mag3': ['+', ['case', mag3, 1, 0]],
+            'mag4': ['+', ['case', mag4, 1, 0]],
+            'mag5': ['+', ['case', mag5, 1, 0]]
+          }
+        });
+
+
+        // When a click event occurs on a feature in
+        // the unclustered-point layer, open a popup at
+        // the location of the feature, with
+        // description HTML from its properties.
+        console.log("adding on click unclustered point function");
+        map.on('click', 'unclustered-point', function(e) {
+          var coordinates = e.features[0].geometry.coordinates.slice();
+          var mag = e.features[0].properties.quality;
+          var stream_id = e.features[0].properties.stream_id;
+
+          // Ensure that if the map is zoomed out such that
+          // multiple copies of the feature are visible, the
+          // popup appears over the copy being pointed to.
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+
+          console.log("adding popup");
+
+          new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(
+              '<iframe width="560" height=315" src="' + stream_id + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+            )
+            .addTo(map);
+        });
+
+        map.on('mouseenter', 'clusters', function() {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+        map.on('mouseleave', 'clusters', function() {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+      });
 
 });
