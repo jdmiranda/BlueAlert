@@ -32,15 +32,18 @@ var bluealert;
   //Camera
 
   function addSelfMarker() {
-    console.log('creating self marker here');
+    console.log('creating self marker here ' + longitude + ' ' + latitude);
     var marker = new mapboxgl.Marker()
       .setLngLat([longitude, latitude])
       .addTo(map);
   };
 
   document.getElementById('camera').addEventListener('click', function() {
+    if (latitude != 0 && longitude != 0)
+    {
     fly(map, longitude, latitude);
     addSelfMarker();
+  }
   });
 
   document.getElementById('gofundme').addEventListener('click', function() {
