@@ -1,11 +1,20 @@
-var village;
+
+var bluealert;
 (function () {
   "use strict";
-
+  function include(file) {
+    var script  = document.createElement('script');
+    script.src  = file;
+    script.type = 'text/javascript';
+    script.defer = true;
+    document.getElementsByTagName('head').item(0).appendChild(script);
+  }
+console.log("getting ready to import");
+  include("video.js");
 
       //ACCESS
       mapboxgl.accessToken = 'pk.eyJ1IjoiYW1icmlhc2hpciIsImEiOiJjaWZ0MXAybDcwZ3I2dHRseWI3NjAyMTZ2In0.eD7uxIRAY9ifI6ecnkiu-g';
-      var map = map = new mapboxgl.Map({
+      var map = new mapboxgl.Map({
         container: 'map',
         zoom: 3,
         center: [
