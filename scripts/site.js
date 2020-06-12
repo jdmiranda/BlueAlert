@@ -38,17 +38,39 @@ var bluealert;
       .addTo(map);
   };
 
+  //https://developers.google.com/web/fundamentals/media/recording-video
+
+  var recorder = document.getElementById('camera');
+  var player = document.getElementById('player');
+
   document.getElementById('camera').addEventListener('click', function() {
-    if (latitude != 0 && longitude != 0)
-    {
-    fly(map, longitude, latitude);
-    addSelfMarker();
-  }
+    if (latitude != 0 && longitude != 0) {
+      fly(map, longitude, latitude);
+      addSelfMarker();
+
+
+      console.log(player);
+      
+      var handleSuccess = function(stream) {
+        player.srcObject = stream;
+      };
+
+      navigator.mediaDevices.enumerateDevices().then((devices) => {
+        devices = devices.filter((d) => d.kind === 'videoinput');
+      });
+
+      navigator.mediaDevices.getUserMedia({
+          audio: true,
+          video: true
+        })
+        .then(handleSuccess)
+    }
   });
 
   document.getElementById('gofundme').addEventListener('click', function() {
     window.location.href = "https://www.gofundme.com";
   });
+
 
 
   //Load events
