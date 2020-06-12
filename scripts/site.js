@@ -215,10 +215,7 @@ console.log(devices);
       new mapboxgl.Popup()
         .setLngLat(coordinates)
         .setHTML(
-          '<iframe src="' + e.features[0].properties.stream_url + '" width="380" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' +
-          '<p><a href="' + e.features[0].properties.stream_url +
-          '"><h2> "' + e.features[0].properties.stream_name + '"</h2></p>'
-        )
+          '<iframe src="' + e.features[0].properties.stream_url + '" width="380" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>')
         .addTo(map);
     });
 
