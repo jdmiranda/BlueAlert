@@ -50,18 +50,21 @@ var bluealert;
 
 
       console.log(player);
-      
+
       var handleSuccess = function(stream) {
         player.srcObject = stream;
       };
 
+var devices;
       navigator.mediaDevices.enumerateDevices().then((devices) => {
         devices = devices.filter((d) => d.kind === 'videoinput');
       });
-
+console.log(devices);
       navigator.mediaDevices.getUserMedia({
           audio: true,
-          video: true
+          video: {
+            deviceId: devices[0].deviceId
+          }
         })
         .then(handleSuccess)
     }
