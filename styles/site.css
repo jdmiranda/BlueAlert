@@ -39,3 +39,8 @@ body {
   color: #fff;
   background: #ee8a65;
 }
+
+/*https://gis.stackexchange.com/questions/279127/how-to-add-css-styling-in-mapbox-gl-popup*/
+.mapboxgl-popup-close-button {
+  display:none
+}

@@ -1,0 +1,23 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [{
+    "type": "Feature",
+    "properties": {
+      "id": "georgefloydmurder",
+      "event_id": 1,
+      "time": 1507425650893,
+      "stream_id": "https://www.youtube.com/embed/IUav_lXMbnU",
+      "quality": 1
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [-94.636230, 46.392410, 0.0]
+    }
+  }]
+}
