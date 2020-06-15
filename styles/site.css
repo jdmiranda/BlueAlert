@@ -71,11 +71,11 @@ body {
 }
 
 video {
-  border: 0px solid #00000000;
+  border: 1px solid black;
   position: absolute;
-  width: 25%;
-  height: 15%;
-  left:50%;
+  width: 380px;
+  height: 281px;
+  left:0;
   bottom:7%;
 }
 
