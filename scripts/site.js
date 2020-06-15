@@ -29,57 +29,143 @@ var bluealert;
     style: 'mapbox://styles/mapbox/streets-v11'
   });
 
+  let videoPlayer = document.getElementById("videoPlayer");
+  let cameraButton = document.getElementById("cameraButton");
+  let gofundmeButton = document.getElementById("gofundmeButton");
+  let whereamiButton = document.getElementById("whereamiButton");
+
   //Camera
 
   function addSelfMarker() {
+      getLocationUpdate();
     console.log('creating self marker here ' + longitude + ' ' + latitude);
+
+    var popup = new mapboxgl.Popup()
+      .setHTML();
+
     var marker = new mapboxgl.Marker()
       .setLngLat([longitude, latitude])
+      .setPopup(popup)
       .addTo(map);
+
   };
+
+
+  // let preview = document.getElementById("preview");
+  // let recording = document.getElementById("recording");
+  // let startButton = document.getElementById("startButton");
+  // let stopButton = document.getElementById("stopButton");
+  // let downloadButton = document.getElementById("downloadButton");
+  // let logElement = document.getElementById("log");
+  //
+  // let recordingTimeMS = 5000;
+  //
+  // function log(msg) {
+  //   logElement.innerHTML += msg + "\n";
+  // }
+  //
+  // function wait(delayInMS) {
+  //   return new Promise(resolve => setTimeout(resolve, delayInMS));
+  // }
+  //
+  // function startRecording(stream, lengthInMS) {
+  //   let recorder = new MediaRecorder(stream);
+  //   let data = [];
+  //
+  //   recorder.ondataavailable = event => data.push(event.data);
+  //   recorder.start();
+  //   log(recorder.state + " for " + (lengthInMS / 1000) + " seconds...");
+  //
+  //   let stopped = new Promise((resolve, reject) => {
+  //     recorder.onstop = resolve;
+  //     recorder.onerror = event => reject(event.name);
+  //   });
+  //
+  //   let recorded = wait(lengthInMS).then(
+  //     () => recorder.state == "recording" && recorder.stop()
+  //   );
+  //
+  //   return Promise.all([
+  //       stopped,
+  //       recorded
+  //     ])
+  //     .then(() => data);
+  // }
+  //
+  // function stop(stream) {
+  //   stream.getTracks().forEach(track => track.stop());
+  // }
+  // startButton.addEventListener("click", function() {
+  //   navigator.mediaDevices.getUserMedia({
+  //       video: true,
+  //       audio: true
+  //     }).then(stream => {
+  //       preview.srcObject = stream;
+  //       downloadButton.href = stream;
+  //       preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+  //       return new Promise(resolve => preview.onplaying = resolve);
+  //     }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
+  //     .then(recordedChunks => {
+  //       let recordedBlob = new Blob(recordedChunks, {
+  //         type: "video/webm"
+  //       });
+  //       recording.src = URL.createObjectURL(recordedBlob);
+  //       downloadButton.href = recording.src;
+  //       downloadButton.download = "RecordedVideo.webm";
+  //
+  //       log("Successfully recorded " + recordedBlob.size + " bytes of " +
+  //         recordedBlob.type + " media.");
+  //     })
+  //     .catch(log);
+  // }, false);
+  // stopButton.addEventListener("click", function() {
+  //   stop(preview.srcObject);
+  // }, false);
+
+
 
   //https://developers.google.com/web/fundamentals/media/recording-video
 
-  var recorder = document.getElementById('camera');
-  var player = document.getElementById('player');
+  // var recorder = document.getElementById('camera');
+  // var player = document.getElementById('player');
+  //
+  // document.getElementById('camera').addEventListener('click', function() {
+  //   if (latitude != 0 && longitude != 0) {
+  //     fly(map, longitude, latitude);
+  //     addSelfMarker();
+  //
+  //
+  //     console.log(player);
+  //
+  //     var handleSuccess = function(stream) {
+  //       player.srcObject = stream;
+  //     };
+  //
+  //     var devices;
+  //     navigator.mediaDevices.enumerateDevices().then((devices) => {
+  //       devices = devices.filter((d) => d.kind === 'videoinput');
+  //     });
+  //     console.log(devices);
+  //     navigator.mediaDevices.getUserMedia({
+  //         audio: true,
+  //         video: {
+  //           deviceId: devices[0].deviceId
+  //         }
+  //       })
+  //       .then(handleSuccess)
+  //   }
+  // });
 
-  document.getElementById('camera').addEventListener('click', function() {
-    if (latitude != 0 && longitude != 0) {
-      fly(map, longitude, latitude);
-      addSelfMarker();
-
-
-      console.log(player);
-
-      var handleSuccess = function(stream) {
-        player.srcObject = stream;
-      };
-
-var devices;
-      navigator.mediaDevices.enumerateDevices().then((devices) => {
-        devices = devices.filter((d) => d.kind === 'videoinput');
-      });
-console.log(devices);
-      navigator.mediaDevices.getUserMedia({
-          audio: true,
-          video: {
-            deviceId: devices[0].deviceId
-          }
-        })
-        .then(handleSuccess)
-    }
-  });
-
-  document.getElementById('gofundme').addEventListener('click', function() {
-    window.location.href = "https://www.gofundme.com/f/stopp-sharing-the-optimum-peoples039-perspective";
-  });
+  // document.getElementById('gofundme').addEventListener('click', function() {
+  //   window.location.href = "https://www.gofundme.com/f/stopp-sharing-the-optimum-peoples039-perspective";
+  // });
 
 
 
   //Load events
   map.on('load', function() {
     // Insert the layer beneath any symbol layer.
-    getLocationUpdate();
+
 
     map.setPaintProperty('building', 'fill-color', [
       'interpolate',
@@ -217,6 +303,8 @@ console.log(devices);
         .setHTML(
           '<iframe src="' + e.features[0].properties.stream_url + '" width="380" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>')
         .addTo(map);
+
+        videoPlayer.src = "https://file-examples.com/wp-content/uploads/2020/03/file_example_WEBM_1920_3_7MB.webm";
     });
 
     map.on('mouseenter', 'unclustered-point', function() {

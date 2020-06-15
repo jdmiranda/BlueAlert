@@ -6,38 +6,77 @@ body {
 #map {
   position: absolute;
   top: 0;
-  bottom: 0;
   width: 100%;
+  height: 95%;
 }
 
-#camera {
+#cameraButton {
   display: block;
-  position: relative;
+  position: absolute;
   margin: 0px auto;
-  width: 50%;
-  height: 40px;
-  padding: 10px;
+  width: 25%;
+  height: 5%;
   border: none;
-  border-radius: 3px;
-  font-size: 12px;
+  font-size: 100%;
+  text-align: center;
+  color: #fff;
+  background: #6569ee;
+  left: 0;
+  bottom: 0;
+}
+
+#shareButton {
+  display: block;
+  position: absolute;
+  margin: 0px auto;
+  width: 25%;
+  height: 5%;
+  border: none;
+  font-size: 100%;
+  text-align: center;
+  color: #fff;
+  background: #6569ee;
+  left: 25%;
+  bottom: 0;
+}
+
+#gofundmeButton {
+  display: block;
+  position: absolute;
+  margin: 0px auto;
+  width: 25%;
+  height: 5%;
+  border: none;
+  font-size: 100%;
   text-align: center;
   color: #fff;
   background: #ee8a65;
+  bottom: 0;
+  right: 25%;
 }
 
-#gofundme {
+#whereamiButton {
   display: block;
-  position: relative;
+  position: absolute;
   margin: 0px auto;
-  width: 50%;
-  height: 40px;
-  padding: 10px;
+  width: 25%;
+  height: 5%;
   border: none;
-  border-radius: 3px;
-  font-size: 12px;
+  font-size: 100%;
   text-align: center;
   color: #fff;
-  background: #ee8a65;
+  background: #6569ee;
+  right: 0;
+  bottom: 0;
+}
+
+video {
+  border: 0px solid #00000000;
+  position: absolute;
+  width: 25%;
+  height: 15%;
+  left:50%;
+  bottom:7%;
 }
 
 /*https://gis.stackexchange.com/questions/279127/how-to-add-css-styling-in-mapbox-gl-popup*/
@@ -56,10 +95,7 @@ body {
   padding: 1%;
 }
 
-video {
-  margin-top: 2px;
-  border: 1px solid black;
-}
+
 
 .button {
   cursor: pointer;
@@ -80,15 +116,13 @@ h2 {
 }
 
 .left {
-  margin-right: 10px;
-  float: left;
+  margin: 0px auto;;
   width: 160px;
   padding: 0px;
 }
 
 .right {
-  margin-left: 10px;
-  float: left;
+  margin: 0px auto;;
   width: 160px;
   padding: 0px;
 }
